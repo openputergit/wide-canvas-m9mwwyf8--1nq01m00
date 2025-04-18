@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowNFT Marketplace</title>
+    <script src="https://cdn.jsdelivr.net/npm/@blocto/sdk@latest/dist/blocto.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        body {
+            background: linear-gradient(45deg, #4158D0, #C850C0, #FFCC70);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="text-white">
+    <nav class="glass fixed w-full p-4 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">FlowNFT Market</h1>
+            <button id="connectWallet" class="glass px-6 py-2 rounded-full hover:bg-white/30 transition">
+                Connect Wallet
+            </button>
+        </div>
+    </nav>
+
+    <main class="container mx-auto pt-24 px-4">
+        <div class="glass p-6 rounded-xl mb-8">
+            <div class="flex flex-wrap gap-4 justify-between items-center">
+                <input type="text" placeholder="Search collectibles..." class="glass bg-transparent p-2 rounded-lg flex-grow">
+                <select class="glass bg-transparent p-2 rounded-lg">
+                    <option value="all">All Categories</option>
+                    <option value="art">Art</option>
+                    <option value="music">Music</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="nftGrid">
+            <!-- NFT cards will be dynamically inserted here -->
+        </div>
+
+        <div class="glass p-6 rounded-xl mt-8">
+            <h2 class="text-xl font-bold mb-4">Create NFT</h2>
+            <form id="mintForm" class="space-y-4">
+                <input type="file" class="glass bg-transparent p-2 rounded-lg w-full" required>
+                <input type="text" placeholder="NFT Name" class="glass bg-transparent p-2 rounded-lg w-full" required>
+                <textarea placeholder="Description" class="glass bg-transparent p-2 rounded-lg w-full" required></textarea>
+                <input type="number" placeholder="Price in FLOW" class="glass bg-transparent p-2 rounded-lg w-full" required>
+                <button type="submit" class="glass px-6 py-2 rounded-full hover:bg-white/30 transition w-full">
+                    Mint NFT
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // Mock NFT data (In production, this would come from the Flow blockchain)
+        const mockNFTs = [
+            {
+                id: 1,
+                name: "Digital Artwork #1",
+                description: "Beautiful digital art piece",
+                price: "10.0 FLOW",
+                image: "https://source.unsplash.com/random/400x400?art,1"
+            },
+            {
+                id: 2,
+                name: "Music Track #1",
+                description: "Original electronic music",
+                price: "5.0 FLOW",
+                image: "https://source.unsplash.com/random/400x400?music,1"
+            },
+            // Add more mock NFTs as needed
+        ];
+
+        // Render NFT cards
+        function renderNFTs() {
+            const grid = document.getElementById('nftGrid');
+            grid.innerHTML = mockNFTs.map(nft => `
+                <div class="glass p-4 rounded-xl">
+                    <img src="${nft.image}" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <h3 class="text-lg font-bold">${nft.name}</h3>
+                    <p class="text-sm opacity-80">${nft.description}</p>
+                    <div class="flex justify-between items-center mt-4">
+                        <span>${nft.price}</span>
+                        <button class="glass px-4 py-1 rounded-full hover:bg-white/30 transition" onclick="buyNFT(${nft.id})">
+                            Buy
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Connect wallet function
+        async function connectWallet() {
+            // In production, this would integrate with Blocto SDK
+            document.getElementById('connectWallet').textContent = "Connected";
+            alert("Wallet connected! (Mock)");
+        }
+
+        // Buy NFT function
+        function buyNFT(id) {
+            // In production, this would trigger a Flow blockchain transaction
+            alert(`Initiating purchase of NFT #${id}`);
+        }
+
+        // Mint NFT function
+        document.getElementById('mintForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // In production, this would upload to IPFS and mint on Flow blockchain
+            alert("NFT minting initiated! (Mock)");
+        });
+
+        // Initialize
+        document.getElementById('connectWallet').addEventListener('click', connectWallet);
+        renderNFTs();
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
